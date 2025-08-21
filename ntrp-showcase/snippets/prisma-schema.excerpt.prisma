@@ -1,0 +1,35 @@
+// 展示用途的擷取片段，非完整專案
+
+model User {
+  id             String   @id @default(cuid())
+  discordId      String   @unique @map("discord_id")
+  username       String
+  avatar         String?
+  roles          String[]                // 儲存 Discord 角色 ID 陣列
+  is_admin       Boolean  @default(false)
+  is_donor       Boolean  @default(false)
+  is_whitelisted Boolean  @default(false)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt      @map("updated_at")
+}
+
+model Rule {
+  id        String   @id @default(cuid())
+  title     String
+  slug     String    @unique
+  content   String
+  isPrivate Boolean  @default(false)     // true = 只有白名單可見
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  @@index([slug])
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+}
